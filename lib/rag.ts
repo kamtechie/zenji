@@ -1,5 +1,5 @@
 import { embed } from "./openai";
-import { getRemedyCollection } from "./chroma";
+import { getRemedyCollection } from "./chroma/client";
 
 export async function retrieveRelevantRemedies(query: string) {
   const collection = await getRemedyCollection();
