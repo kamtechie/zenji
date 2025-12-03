@@ -3,14 +3,15 @@
 import { openai } from "@/lib/openai";
 import { retrieveRelevantRemedies } from "@/lib/rag";
 import { systemPrompt } from "@/lib/prompts";
+import { ChatMessage } from "@/lib/types";
 
-export async function sendMessage(messages: any[]) {
+export async function sendMessage(messages: ChatMessage[]) {
   const lastMsg = messages[messages.length - 1]?.content || "";
   const retrieved = await retrieveRelevantRemedies(lastMsg);
 
-  const response = await openai.chat.completions.create({
-    model: "gpt-4-turbo", // Using a valid model name as gpt-4.1 is not standard
-    messages: [
+  const response = await openai.responses.create({
+    model: "gpt-4.1-mini",
+    input: [
       { role: "system", content: systemPrompt },
       ...messages,
       {
@@ -20,5 +21,10 @@ export async function sendMessage(messages: any[]) {
     ]
   });
 
-  return response.choices[0].message;
+  return {
+    role: "assistant",
+    content:
+      // Convenience field provided by the Responses API
+      response.output_text ?? response.output?.[0]?.content?.[0]?.text ?? ""
+  } satisfies ChatMessage;
 }

@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { sendMessage } from "./actions";
+import { ChatMessage } from "@/lib/types";
 
 export default function ChatPage() {
-  const [messages, setMessages] = useState<any[]>([]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
 
   async function handleSend(text: string) {
-    const newMessages = [...messages, { role: "user", content: text }];
+    const newMessages: ChatMessage[] = [...messages, { role: "user", content: text }];
     setMessages(newMessages);
 
     const reply = await sendMessage(newMessages);
