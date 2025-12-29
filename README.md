@@ -20,6 +20,42 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Testing
+
+This project uses [Jest](https://jestjs.io/) and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) for unit testing.
+
+### Running Tests
+
+```bash
+# Run all tests
+npm test
+
+# Run tests in watch mode (re-runs on file changes)
+npm run test:watch
+
+# Run tests with coverage report
+npm run test:coverage
+```
+
+### Test Coverage
+
+The test suite includes:
+
+- **Library/Utility Tests**: Type validation, prompt content, OpenAI embedding generation, ChromaDB client, RAG retrieval
+- **Server Action Tests**: Message handling, RAG integration, OpenAI API interactions
+- **Component Tests**: Chat UI rendering, user interactions, state management
+
+Current coverage: ~88% overall code coverage across all modules.
+
+### Writing Tests
+
+Tests are co-located with the files they test using the `.test.ts` or `.test.tsx` extension:
+
+- `lib/*.test.ts` - Tests for library utilities
+- `app/*.test.tsx` - Tests for React components and server actions
+
+All external dependencies (OpenAI, ChromaDB) are mocked to ensure tests run independently without requiring API keys or external services.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
